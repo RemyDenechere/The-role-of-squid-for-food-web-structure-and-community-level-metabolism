@@ -67,12 +67,12 @@ tiledlayout(2, 2, TileSpacing="compact", Padding="compact")                % Set
 %
 nexttile
 hold on
-plot(param.Winf_F, param.A_F, '.', 'Color', col.blul, 'MarkerSize', 7)     % Teleost data A vs. Winf (asymptotic size)
+%plot(param.Winf_F, param.A_F, '.', 'Color', col.blul, 'MarkerSize', 7)     % Teleost data A vs. Winf (asymptotic size)
 plot(param.AWinf.S, param.A.S, 's', 'Color', col.ora, 'MarkerSize', 7, ...
     'MarkerFaceColor', col.oral)                                           % Squid data A vs. Winf
 plot(param.AWinf.S, 11.7635*param.AWinf.S.^0.114, '-', 'Color', ...
     col.ora,'Linewidth', 1.5)                                              % Teleost Fit data A vs. Winf
-plot([min(param.Winf_F) max(param.Winf_F)],  [geomean(param.A_F(~isnan(param.A_F))), ...
+%plot([min(param.Winf_F) max(param.Winf_F)],  [geomean(param.A_F(~isnan(param.A_F))), ...
     geomean(param.A_F(~isnan(param.A_F)))], ...
     'Color', col.blul,  'Linewidth', 1.5)                                  % Squid Fit data A vs. Winf
 hold off
@@ -295,7 +295,7 @@ end
 figure(4)
 
 tiledlayout(2,2, Padding="compact", TileSpacing="compact");
-Ftsize = 11*1.3112;  % 14; 
+Ftsize = 11;  % 14; 
 
 nexttile
 PlotEcosystem(50, 130, 0)

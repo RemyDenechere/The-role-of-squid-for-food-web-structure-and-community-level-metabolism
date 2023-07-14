@@ -18,7 +18,7 @@ Tab = Tab(~(isnan(Tab.Aged) | isnan(Tab.Weghtg) | Tab.Aged <= 0 | Tab.Weghtg == 
 
 param.W2A.w = Tab.Weghtg;
 param.W2A.a = Tab.Aged;
-param.W2A.Winf = Tab.Asymptoticweightg;
+param.W2A.Winf = Tab.AsymptoticWeightg;
 param.W2A.Sp = Tab.Species;
 param.W2A.SpID = categories(Tab.Species) ; % list of species
 param.W2A.lth = length(param.W2A.SpID);
