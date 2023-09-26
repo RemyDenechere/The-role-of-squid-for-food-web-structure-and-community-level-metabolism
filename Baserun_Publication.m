@@ -206,7 +206,7 @@ for dp = 1:length(depth)
 
         % Sum of biomass per species average per time per size class per species :
         for ii = 1:param.nSpecies 
-            Bi(i, ii) =  mean(mean(yend(:,param.ix1(ii):param.ix2(ii))));
+            Bi(i, ii) =  sum(mean(yend(:,param.ix1(ii):param.ix2(ii))));
         end 
     end 
     
