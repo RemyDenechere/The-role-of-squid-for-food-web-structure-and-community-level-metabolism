@@ -1,4 +1,4 @@
-function param = baseparameters(WinfSquid)
+function param = baseparameters(WinfSquid, beta_squid)
 % It would be great to have this model in a more flexible way: where we
 % could specify the parameter physiology/prey pred interaction... with
 % default value based on fish
@@ -8,8 +8,11 @@ function param = baseparameters(WinfSquid)
 
 %%
 clear param
-if nargin == 0
+if nargin < 1
     WinfSquid = 3.5*10^3;
+end
+if nargin < 2
+    beta_squid = 50;
 end
 
 % PLot parameters: 
@@ -87,7 +90,7 @@ end
 % predator prey preference ------------------------------------------------
 %
 param.beta(1:param.ixFish(end)) = 400; % optimal pred/prey mass ratio fish
-param.beta(param.ix1(5):param.ix2(5)) = 50; % optimal pred/prey mass ratio Cephalopod 
+param.beta(param.ix1(5):param.ix2(5)) = beta_squid; % optimal pred/prey mass ratio Cephalopod 
 param.sigma = 1.3;
 
 % Size-preference matrix

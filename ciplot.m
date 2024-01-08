@@ -1,4 +1,4 @@
-function plot_handle = ciplot(lower,upper,x,colour, alpha, Linestyle)
+function plot_handle = ciplot(lower,upper,x,colour, alpha, Linestyle, HV)
      
 % ciplot(lower,upper)       
 % ciplot(lower,upper,x)
@@ -19,6 +19,10 @@ function plot_handle = ciplot(lower,upper,x,colour, alpha, Linestyle)
 
 if length(lower)~=length(upper)
     error('lower and upper vectors must be same length')
+end
+
+if nargin<7
+    HV = 'on'; 
 end
 
 if nargin<6
@@ -46,6 +50,6 @@ if find(size(upper)==(max(size(upper))))<2
 upper=upper'; end
 
 plot_handle = fill([x fliplr(x)],[upper fliplr(lower)],  colour, ...
-    'FaceAlpha', alpha ,'LineStyle', Linestyle, 'EdgeColor', 'k'); % 
+    'FaceAlpha', alpha ,'LineStyle', Linestyle, 'EdgeColor', 'k', 'HandleVisibility', HV); % 
 end
 

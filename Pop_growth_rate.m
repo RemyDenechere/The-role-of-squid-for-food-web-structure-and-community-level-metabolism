@@ -1,7 +1,17 @@
 function [R_star , r_max, minWinf, maxWinf] = Pop_growth_rate(Winf, f, param, i, j)
+% -------------------------------------------------------------------------
 % give an approximation of the population growth rate of a population give
 % based on the growth coefficient A. 
-n = 3/4;
+% -------------------------------------------------------------------------
+% This function has been modified from: 
+% Title : Deriving population scaling rules from individual-level metabolism and life history traits
+% Auteurs : Rémy Denéchère, P Daniël van Denderen, Ken H Andersen
+% Date de publication : 2022/4/1
+% Revue : The American Naturalist
+% Volume : 199
+% -------------------------------------------------------------------------
+n = 3/4; % Metabolic exponent for fish, the Metabolic exponent for squid is
+         % latter set at 2/3 as the data suggest! 
 
 if i == 2 % case 1: Teleost
     %    value         Lower limit    Upper limit 
@@ -50,7 +60,7 @@ elseif i == 6
     minWinf = 3.220e-07; maxWinf = 9.5922e-06;
     
     
-    % case 6 : unknown organism
+% case 6 : unknown organism
 elseif i == 1
     A0 = [exp(1.70586) exp(1.70586) exp(1.70586)]; % Based on bivalves
     b = [0.2149]; % Based on bivalves
@@ -69,7 +79,7 @@ elseif i == 7 % Squids
 end
 
 
-
+% 
     h0 = A0(j)/(param.epsa*(param.f0 - param.fc));
 
 % growth coefficient: -----------------------------------------------------
