@@ -70,12 +70,11 @@ elseif i == 1
 
 
 elseif i == 7 % Squids
-    A0 = exp([2.465  1.1 3.83]);
-    b = [0.114]; 
+    A0 = exp([3.15 2.83 3.47]);
+    b = [0]; 
     ratio = Winf/0.01; % 
     epsR =  0.03; % based on fish
     minWinf =  24.0709; maxWinf = 500000;
-    n = 2/3; 
 end
 
 
@@ -86,7 +85,7 @@ end
     A = param.epsa.*h0.*Winf.^(b(1)).*(f - param.fc);
 
 % population growth rate: -------------------------------------------------
-    r_max = A.*(1 - n ) .* Winf.^(n - 1) .* ((1 - param.a) .* log(ratio) + log(epsR));
+    r_max = A.*(1 - n) .* Winf.^(n - 1) .* ((1 - param.a) .* log(ratio) + log(epsR));
     
 % Minimum resource level:  ------------------------------------------------
     R_star = param.fc * h0 * Winf.^(b(1) + n - param.q)...

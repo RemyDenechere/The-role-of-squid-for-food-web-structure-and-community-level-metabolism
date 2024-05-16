@@ -1,4 +1,4 @@
-function param = baseparameters(WinfSquid, beta_squid)
+function param = baseparameters(WinfSquid, beta_squid, A_squid)
 % It would be great to have this model in a more flexible way: where we
 % could specify the parameter physiology/prey pred interaction... with
 % default value based on fish
@@ -14,6 +14,9 @@ end
 if nargin < 2
     beta_squid = 50;
 end
+if nargin < 3
+    A_squid = 23.3421;
+end
 
 % PLot parameters: 
 param.SpId = {'SmallPel','Mesopelagic','LargePel', 'Demersal', 'Squid'};
@@ -24,7 +27,7 @@ param.Color = [0.07, 0.62, 1 ; ...
     0, 0, 0 ;...
     1.00,0.55,0.00]; 
 
-param.tEnd =  300;
+param.tEnd =  350;
 param.ixR = [1 2 3 4]; % 4 resources: Small - large zoo small - large benthos 
 param.w(param.ixR) = [2e-06  0.001 0.5e-03 0.25]; % weight lower limit
 param.wc(param.ixR) = [2e-06*sqrt(500) 0.001*sqrt(500) 0.5e-03*sqrt(250000) 0.25*sqrt(500)]; % weight central size
@@ -104,17 +107,26 @@ param.prefer = thetaP;
 %
 % Physiology: -------------------------------------------------------------
 %
-param.epsAssim = 0.7;                   % assimilation efficiency Fish
-param.epst = 0.1;                       % efficiency of benthos community 
+param.epsAssim = 0.7;                                     % assimilation efficiency Fish
+% param.epsAssim = repmat(0.7, param.nSpecies, 1)';       % assimilation efficiency Fish
+% param.epsAssim(param.ix1(5):param.ix2(5)) = epsAssim;   % assimilation efficiency Squid
+param.epst = 0.1;                                         % efficiency of benthos community 
 param.h = zeros(1, param.NbSizeGrp); param.h(1:end) = 20; % Value fish
-param.h(param.ix1(5):param.ix2(5)) = 28/(param.epsAssim*(0.6 - 0.2)); % Value ceph
-param.met = 0.2*param.h;  % maintenance costs, 20% of h
-param.q = 0.8; % clearance rate exponent:
-param.n = 3/4; % maximum consumption rate exponent
-param.m = 0.825; % metabolic cost exponent 
-param.gamma = 70; % factor for the max clearance rate (area per time)  
-param.eRepro = repmat(0.01,param.nSpecies,1)';
-param.A = param.epsAssim*param.h*(0.6 - 0.4); % here I assume a constant feeding level. 
+param.h(param.ix1(5):param.ix2(5)) = ...
+     A_squid./(param.epsAssim*(0.6 - 0.2));               % Value ceph
+param.met = 0.2*param.h;                                  % maintenance costs, 20% of h
+param.q = 0.8;                                            % clearance rate exponent: all
+% param.q = repmat(0.8, param.nSpecies, 1)';              % clearance rate exponent: Fish
+% param.q(param.ix1(5):param.ix2(5)) = q;                 % clearance rate exponent: Squid
+param.n = 3/4;                                            % maximum consumption rate exponent
+param.m = 0.825;                                          % metabolic cost exponent 
+param.gamma = 70;                                         % factor for the max clearance rate (area per time): all                   
+% param.gamma = repmat(70, param.nSpecies, 1)';           % factor for the max clearance rate (area per time): Fish
+% param.gamma(param.ix1(5):param.ix2(5)) = gamma;         % factor for the max clearance rate (area per time): Squid                  
+param.eRepro = 0.01;                                      % Reproduction efficiency: Fish
+% param.eRepro = repmat(0.01, param.nSpecies, 1)';          % Reproduction efficiency: Fish
+% param.eRepro(param.ix1(5):param.ix2(5)) = eRepro;         % Reproduction efficiency: Squid
+param.A = param.epsAssim*param.h(param.ix1(5))*(0.6 - 0.4); % here I assume a constant feeding level. 
 param.mort0 = (0*param.ixFish'+.1);
 
 %
@@ -127,7 +139,7 @@ param.Q10m = repelem(1.88, param.NbSizeGrp);
 % Physio: 
 param.z = (param.w./param.wu)';
 param.Cmax = (param.h.*param.wc.^param.n)./param.wc;
-param.V = (param.gamma*param.wc.^param.q)./param.wc;
+param.V = (param.gamma.*param.wc.^param.q)./param.wc;
 param.Mc = (param.met.*param.wc.^param.m)./param.wc;
 
 % Fishing mortality:-------------------------------------------------------
@@ -159,7 +171,8 @@ param.kappa = [param.kappaS param.kappaS param.kappaL param.kappaL [1 1 1 1 1 1]
 param.photic = 150;
 param.mesop = 250;
 param.visual = 1.5; % scalar; >1 visual predation primarily during the day, = 1 equal day and night
-param.S2P = 0.6; % predation from Squid to pelagics. 
+param.S2P = 0.6;    % predation from Squid to pelagics. 
+param.F2S = 1;      % predation from Fish to Squid. 
 
 %
 % Vertical distribution: --------------------------------------------------

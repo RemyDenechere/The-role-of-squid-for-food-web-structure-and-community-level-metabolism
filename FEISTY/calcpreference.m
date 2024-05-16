@@ -196,10 +196,15 @@ idx_prey= [prey1 prey2];
 theta(idx_predat,idx_prey) = theta(idx_predat,idx_prey)*0.5; % former value: 0.5
 
 
-% Predation from Squid:
-theta(ceph, (param.ix1(3)):(param.ix2(3))) = param.S2P* theta(ceph, (param.ix1(3)):(param.ix2(3)));
+% Modulation of predation from Squid on Fish by S2P coefficient:
+theta(ceph, (param.ix1(3)):(param.ix2(3))) = param.S2P* theta(ceph, (param.ix1(3)):(param.ix2(3)));     
 theta(ceph, (param.ix1(4)):(param.ix2(4)-4)) = param.S2P* theta(ceph, (param.ix1(4)):(param.ix2(4)-4));
 theta(ceph, prey1) = param.S2P* theta(ceph, prey1);
+
+% Modulation of predation from Fish on Squid by F2S coefficient:
+theta((param.ix1(3)):(param.ix2(3)), ceph) = param.F2S * theta((param.ix1(3)):(param.ix2(3)), ceph);     % Large pelagics predation on Squid
+theta((param.ix1(4)):(param.ix2(4)-4), ceph) = param.F2S * theta((param.ix1(4)):(param.ix2(4)-4), ceph); % Demersal Predation on Squid
+theta(prey1, ceph) = param.F2S * theta(prey1, ceph);
 
 % calculate center of vertical distribution during the day
 [~,idi] = max(depthDay);

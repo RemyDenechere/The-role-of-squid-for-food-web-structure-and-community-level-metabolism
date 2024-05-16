@@ -28,7 +28,7 @@ for i = 1:param.nSpecies
     ixPrev = [ix(end) ix(1:(end-1))];           
     Fin(ix) = Fout(ixPrev);
     % Reproduction:
-    Fin(ix(1)) = param.eRepro(i)*(Fin(ix(1)) + sum(Repro(ix)));                  
+    Fin(ix(1)) = param.eRepro*(Fin(ix(1)) + sum(Repro(ix)));                  
 end
  
 dBdt = Fin' - Fout + (v - mort).*B - Repro ;  

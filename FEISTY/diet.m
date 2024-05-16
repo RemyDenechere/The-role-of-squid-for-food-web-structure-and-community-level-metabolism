@@ -11,6 +11,9 @@ param.y0 = [0.1*param.K 0.01*param.B0];
 if(param.bottom <= param.mesop) %
   param.y0(param.ix1(2):param.ix2(2))=0; % mesopelagics to zero
 end
+if squid == 0 
+  param.y0(param.ix1(5):param.ix2(5)) = 0;
+end
 result = poem(param); 
 
 w = param.wc;
