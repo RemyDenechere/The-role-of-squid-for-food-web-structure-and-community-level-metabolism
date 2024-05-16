@@ -11,13 +11,13 @@
 
 %%
 clear all 
-addpath("Data\", "Data\Data from Denechere et al AmNat\", "FEISTY\")
+addpath("Data\", "Data\Data from Denechere et al AmNat\", "FEISTY\", "Additionnal code\")
 
 col = my_color();     % Colors for the different functional groups. 
 param = param_data(); % Fish and Squid data and parameters for the rmax 
                       % and R* simulations. 
 
-Save_Figures = true;
+Save_Figures = false;
 if ~exist("Fig/")
     mkdir Fig
 end
